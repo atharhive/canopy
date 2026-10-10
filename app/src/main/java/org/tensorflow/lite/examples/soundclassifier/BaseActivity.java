@@ -1,4 +1,4 @@
-package org.tensorflow.lite.examples.soundclassifier;
+ package org.tensorflow.lite.examples.soundclassifier;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
