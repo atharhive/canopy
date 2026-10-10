@@ -1,59 +1,209 @@
 # Canopy
 
-Canopy is an Android application for identifying birds from audio recordings
-using the BirdNET machine-learning model.
+<p align="center">
+  <img src="docs/canopy-cover.svg" alt="Canopy — listen, learn, explore" width="100%">
+</p>
+
+<p align="center">
+  <strong>Private, local-first bird intelligence for curious listeners.</strong><br>
+  Identify birds from sound, build a personal collection, and turn every walk into a challenge.
+</p>
+
+<p align="center">
+  <a href="https://github.com/atharhive/canopy/releases/tag/v5.4.0-gemma-beta"><img src="https://img.shields.io/badge/download-beta-0f766e?style=for-the-badge&logo=android&logoColor=white" alt="Download beta"></a>
+  <a href="https://github.com/atharhive/canopy/releases"><img src="https://img.shields.io/github/v/release/atharhive/canopy?display_name=tag&style=for-the-badge&color=14b8a6" alt="Latest release"></a>
+  <a href="https://github.com/atharhive/canopy/blob/main/LICENSE"><img src="https://img.shields.io/github/license/atharhive/canopy?style=for-the-badge&color=a3e635" alt="License"></a>
+  <a href="https://github.com/atharhive/canopy/commits/main"><img src="https://img.shields.io/github/last-commit/atharhive/canopy?style=for-the-badge&color=0f766e" alt="Last commit"></a>
+  <a href="https://github.com/atharhive/canopy"><img src="https://img.shields.io/github/stars/atharhive/canopy?style=for-the-badge&color=fde68a" alt="GitHub stars"></a>
+</p>
+
+<p align="center">
+  <a href="#getting-started">Getting started</a> ·
+  <a href="#how-it-works">How it works</a> ·
+  <a href="#features">Features</a> ·
+  <a href="#roadmap">Roadmap</a>
+</p>
+
+> **Beta:** Download [Canopy 5.4.0 Local Gemma Beta](https://github.com/atharhive/canopy/releases/tag/v5.4.0-gemma-beta).
+> **Demo video:** _Coming soon — this space is reserved for the walkthrough video._
+
+## What is Canopy?
+
+Canopy is an Android app that listens for bird sounds and uses the local BirdNET
+recognition pipeline to identify likely species. It keeps observations on the
+device, turns detections into collectible field cards, and optionally uses a
+downloaded Gemma model to create short explanations, challenges, and answers
+without sending the user's recordings or collection to a server.
+
+<details>
+<summary><strong>Why Canopy?</strong></summary>
+
+- Birding should be approachable even when you do not know what to look for.
+- Audio-first exploration lets people keep their eyes on the trail.
+- Local processing keeps recordings and location history under the user's control.
+- Progress, cards, and challenges make repeated listening feel rewarding.
+
+</details>
 
 ## Features
 
-- Bird sound recognition from the device microphone
-- Location-aware recognition using the BirdNET meta model
-- Observation history with species information
-- Optional spectrogram and WAV recording support
-- Manual location, Bluetooth audio, language, and accessibility settings
-- Guided demo mode with a simulated bird call and sample detection
-- Optional spoken detection summaries using the device's built-in text-to-speech
+<details>
+<summary><strong>Recognition and narration</strong></summary>
 
-## Requirements
+- BirdNET-powered microphone detection.
+- Location-aware recognition using the BirdNET metadata model.
+- Adjustable confidence threshold and audio source.
+- Optional Android offline text-to-speech summaries.
+- Optional local Gemma summaries; BirdNET remains the source of truth.
+- No ElevenLabs or cloud voice dependency in the local-first build.
 
-- Android Studio
-- JDK 17 or newer
-- Android SDK with API 35
+</details>
 
-## Building
+<details>
+<summary><strong>Collection and challenges</strong></summary>
 
-Open the project in Android Studio, allow Gradle to synchronize, and run the
-`app` configuration on an Android device or emulator.
+- Gallery cards for every unique detected species.
+- Best confidence, observation count, and collection date.
+- Thirteen deterministic challenges that work without Gemma.
+- Optional Gemma-generated challenges based only on collected species.
+- Offline question box for asking Gemma about the collection and birding.
 
-From a terminal with Java configured:
+</details>
+
+<details>
+<summary><strong>Exploration tools</strong></summary>
+
+- Guided simulated demo with a generated chirp.
+- Manual latitude/longitude entry with range validation.
+- Location-aware observations and history.
+- Optional spectrogram and WAV capture.
+- Bluetooth audio input support.
+- Language and high-contrast settings.
+
+</details>
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[Microphone] --> B[Audio buffer]
+    B --> C[BirdNET classifier]
+    D[Location and date] --> C
+    C --> E[Species and confidence]
+    E --> F[Local observation database]
+    F --> G[Collection gallery]
+    E --> H{Gemma downloaded?}
+    H -- Yes --> I[Gemma short summary or challenge]
+    H -- No --> J[Deterministic local fallback]
+    I --> K[Android offline TTS]
+    J --> K
+    F --> L[Personal challenges]
+```
+
+<details>
+<summary><strong>Data and privacy flow</strong></summary>
+
+1. Audio is captured on the device.
+2. BirdNET performs the recognition locally.
+3. Species, confidence, time, and location are stored in the local database.
+4. Gemma receives structured detection or collection text only when enabled.
+5. Android TTS speaks the result locally.
+6. ElevenLabs is intentionally not used in this release.
+
+</details>
+
+## Getting started
+
+### Download the beta
+
+1. Open the [Canopy beta release](https://github.com/atharhive/canopy/releases/tag/v5.4.0-gemma-beta).
+2. Download `Canopy-5.4.0-gemma-beta.apk`.
+3. Optionally download the `.sha256` checksum file.
+4. On Android, allow installation from the source you used to download the APK.
+5. Open Canopy and download the BirdNET model when prompted.
+
+The optional Gemma model is downloaded separately from inside the app and is
+approximately 529 MB. Canopy remains usable without it.
+
+### Build from source
+
+<details>
+<summary><strong>Requirements</strong></summary>
+
+- Android Studio with Android SDK API 35.
+- JDK 17.
+- Android device or emulator running Android 8.0/API 26 or newer.
+- Approximately 2 GB of free space for optional Gemma model testing.
+
+</details>
 
 ```bash
+git clone https://github.com/atharhive/canopy.git
+cd canopy
 ./gradlew assembleDebug
 ```
 
-The generated APK is written to `app/build/outputs/apk/debug/`.
+The debug APK is generated at `app/build/outputs/apk/debug/app-debug.apk`.
 
-The demo is available from the model download screen. It does not require a
-model download and clearly labels its simulated result.
+<details>
+<summary><strong>Run and test locally</strong></summary>
 
-Spoken summaries use Android's local text-to-speech engine. Optional Gemma 3
-1B instruction-tuned int4 inference runs on-device through MediaPipe when its
-separate model download is complete. The model is approximately 529 MB and is
-not bundled in the APK. If it is unavailable, Canopy uses a deterministic
-local summary instead. Gemma receives only the BirdNET species and confidence
-and is instructed not to change the detected species. ElevenLabs is not part
-of the local-first build.
+1. Open the project in Android Studio.
+2. Let Gradle sync and select an Android device or emulator.
+3. Run the `app` configuration.
+4. Grant microphone and location permissions.
+5. Use **Try a demo** to preview the flow without a real model.
+6. Download the BirdNET model and test real detections outdoors.
+7. Open the collection icon to review cards and challenges.
+8. Download Gemma only if the device has enough storage and memory.
+
+</details>
+
+## Release verification
+
+<details>
+<summary><strong>5.4.0 Local Gemma Beta</strong></summary>
+
+- Tag: [`v5.4.0-gemma-beta`](https://github.com/atharhive/canopy/releases/tag/v5.4.0-gemma-beta)
+- APK: `Canopy-5.4.0-gemma-beta.apk`
+- SHA-256: `edb7e6eb1d0f328030c9c092c0171c9db1b6b539c910a322a5b66c92f464f337`
+- Gemma: Gemma 3 1B instruction-tuned int4, downloaded separately.
+
+</details>
 
 ## Model and licensing
 
-The application downloads the BirdNET model on first launch. The model is
-licensed separately from this application; review its license and usage
-restrictions before distributing builds or using the model commercially.
+Canopy source code is distributed under the [GNU General Public License v3](LICENSE).
+BirdNET model files are distributed separately from the app and have their own
+license and usage restrictions. Review those terms before redistributing the
+model or using a build commercially.
 
-The application source is distributed under the GNU General Public License,
-version 3. See [LICENSE](LICENSE).
+The optional Gemma model is downloaded from the model host and is subject to
+Google/Gemma model terms. Users should review and accept those terms where
+required before downloading or redistributing it.
 
-## Project
+## Roadmap
 
-- Application name: Canopy
-- Application ID: `com.atharhive.canopy`
-- Repository: <https://github.com/atharhive/canopy>
+<details>
+<summary><strong>Planned improvements</strong></summary>
+
+- Walk/session summaries.
+- Better collection filters and card artwork.
+- Device-specific Gemma performance guidance.
+- More accessibility refinements.
+- A recorded product walkthrough.
+
+</details>
+
+## Contributing
+
+Issues and pull requests are welcome. Please include the Android version,
+device model, app version, reproduction steps, and relevant log output when
+reporting a problem.
+
+## Project links
+
+- [Repository](https://github.com/atharhive/canopy)
+- [Releases](https://github.com/atharhive/canopy/releases)
+- [Issues](https://github.com/atharhive/canopy/issues)
+- [License](LICENSE)

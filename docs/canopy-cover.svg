@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 620" role="img" aria-labelledby="title desc">
+  <title id="title">Canopy bird intelligence</title>
+  <desc id="desc">A stylized bird above layered forest leaves with the Canopy wordmark.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#082f2d"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bef264"/>
+      <stop offset="1" stop-color="#14b8a6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="620" rx="34" fill="url(#sky)"/>
+  <circle cx="1290" cy="135" r="78" fill="#fef3c7" opacity=".9"/>
+  <path d="M0 505C210 380 360 530 570 440S920 390 1110 475s290 74 490-48v193H0Z" fill="#064e3b"/>
+  <path d="M0 565c230-120 390 45 620-60s350-17 520 52 305 10 460-62v125H0Z" fill="#052e2b"/>
+  <g fill="url(#leaf)" opacity=".95">
+    <path d="M120 540c-18-105 44-160 122-180 20 84-12 152-122 180Z"/>
+    <path d="M230 570c11-105 88-143 166-139-5 87-58 137-166 139Z"/>
+    <path d="M1395 555c-14-105 48-161 126-180 20 84-12 151-126 180Z"/>
+    <path d="M1285 590c14-100 91-138 167-134-8 82-61 132-167 134Z"/>
+  </g>
+  <g fill="#fef3c7">
+    <path d="M775 210c80-84 190-62 238 7-78-28-132-10-190 48 13-33-1-38-48-55Z"/>
+    <path d="M860 263c52-25 110-24 156 6-62 13-97 42-120 91-8-43-18-62-36-97Z"/>
+    <circle cx="996" cy="206" r="8" fill="#082f2d"/>
+  </g>
+  <text x="120" y="230" fill="#fef3c7" font-family="sans-serif" font-size="92" font-weight="700" letter-spacing="4">CANOPY</text>
+  <text x="126" y="292" fill="#ccfbf1" font-family="sans-serif" font-size="28" letter-spacing="3">LISTEN • LEARN • EXPLORE</text>
+</svg>
