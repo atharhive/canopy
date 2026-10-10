@@ -10,6 +10,7 @@ using the BirdNET machine-learning model.
 - Observation history with species information
 - Optional spectrogram and WAV recording support
 - Manual location, Bluetooth audio, language, and accessibility settings
+- Guided demo mode with a simulated bird call and sample detection
 
 ## Requirements
 
@@ -29,6 +30,9 @@ From a terminal with Java configured:
 ```
 
 The generated APK is written to `app/build/outputs/apk/debug/`.
+
+The demo is available from the model download screen. It does not require a
+model download and clearly labels its simulated result.
 
 ## Model and licensing
 

@@ -36,4 +36,16 @@
     <string name="bluetooth_connection">Use Bluetooth</string>
     <string name="manual_location">Set location</string>
     <string name="error_invalid_GPS">Invalid GPS format</string>
+    <string name="choose_location">Choose location</string>
+    <string name="location_dialog_title">Set observation location</string>
+    <string name="latitude_hint">Latitude (-90 to 90)</string>
+    <string name="longitude_hint">Longitude (-180 to 180)</string>
+    <string name="use_current_location">Use current location</string>
+    <string name="save_location">Save location</string>
+    <string name="demo">Try a demo</string>
+    <string name="demo_title">Canopy demo</string>
+    <string name="demo_description">Hear a simulated bird call, then see how Canopy presents a detection.</string>
+    <string name="play_demo">Play demo</string>
+    <string name="demo_result">Demo result</string>
+    <string name="demo_result_text">European Robin\n91% confidence\nThis is a simulated result for the guided demo.</string>
 </resources>

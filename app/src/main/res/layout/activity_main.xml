@@ -133,6 +133,15 @@
                 android:textSize="18dp"
                 android:singleLine="true"
                 android:id="@+id/gps"/>
+            <Button
+                android:id="@+id/manual_location_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/choose_location"
+                android:onClick="chooseLocation"
+                android:textColor="?colorSurfaceVariant"
+                android:backgroundTint="?colorPrimary" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

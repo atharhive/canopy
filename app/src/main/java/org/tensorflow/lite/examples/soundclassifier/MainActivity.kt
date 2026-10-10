@@ -33,6 +33,10 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.webkit.WebSettings
 import android.widget.Toast
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.view.Gravity
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.slider.LabelFormatter.LABEL_GONE
@@ -272,6 +276,43 @@ class MainActivity : BaseActivity() {
     for (i in 0 until N) {
       if (i < lowerIndex || i >= upperIndex) {
         buffer.put(i, 0.0f)
+      }
+
+      fun chooseLocation(view: View) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val current = preferences.getString("manual_location_value", "0.000/0.000")!!.split("/")
+        val latitude = EditText(this).apply {
+          hint = getString(R.string.latitude_hint)
+          inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_SIGNED or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+          setText(current.getOrElse(0) { "0.000" })
+        }
+        val longitude = EditText(this).apply {
+          hint = getString(R.string.longitude_hint)
+          inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_SIGNED or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+          setText(current.getOrElse(1) { "0.000" })
+        }
+        val fields = LinearLayout(this).apply {
+          orientation = LinearLayout.VERTICAL
+          gravity = Gravity.CENTER_HORIZONTAL
+          setPadding(48, 0, 48, 0)
+          addView(latitude)
+          addView(longitude)
+        }
+        AlertDialog.Builder(this)
+          .setTitle(R.string.location_dialog_title)
+          .setView(fields)
+          .setPositiveButton(R.string.save_location) { _, _ ->
+            val lat = latitude.text.toString().toDoubleOrNull()
+            val lon = longitude.text.toString().toDoubleOrNull()
+            if (lat == null || lon == null || lat !in -90.0..90.0 || lon !in -180.0..180.0) {
+              Toast.makeText(this, R.string.error_invalid_GPS, Toast.LENGTH_SHORT).show()
+            } else {
+              preferences.edit().putBoolean("manual_location", true).putString("manual_location_value", "$lat/$lon").apply()
+              binding.gps.text = "${getString(R.string.latitude)}: $lat / ${getString(R.string.longitude)}: $lon"
+            }
+          }
+          .setNegativeButton(android.R.string.cancel, null)
+          .show()
       }
     }
   soundClassifier.recognizeAndDisplay(buffer)

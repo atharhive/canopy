@@ -24,6 +24,8 @@ local.properties
 *.jks
 *.keystore
 key.properties
+*.apk
+*.apk.sha256
 
 # OS files
 .DS_Store

@@ -96,6 +96,16 @@
                 android:textColor="?colorSurfaceVariant"
                 android:visibility="gone"
                 android:onClick="startMain"/>
+            <Button
+                android:id="@+id/demo_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="@string/demo"
+                android:onClick="startDemo"
+                android:textColor="?colorSurfaceVariant"
+                android:backgroundTint="?colorPrimary" />
         </LinearLayout>
 
     </LinearLayout>

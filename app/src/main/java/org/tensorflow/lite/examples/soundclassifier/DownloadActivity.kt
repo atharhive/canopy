@@ -37,4 +37,8 @@ class DownloadActivity  : BaseActivity() {
         startActivity(intent)
         finish()
     }
+
+    fun startDemo(view: View) {
+        startActivity(Intent(this, DemoActivity::class.java))
+    }
 }
