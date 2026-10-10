@@ -26,6 +26,21 @@ android {
         viewBinding true
     }
 
+    def releaseStoreFile = findProperty("canopyReleaseStoreFile")
+    def releaseStorePassword = findProperty("canopyReleaseStorePassword")
+    def releaseKeyAlias = findProperty("canopyReleaseKeyAlias")
+    def releaseKeyPassword = findProperty("canopyReleaseKeyPassword")
+    signingConfigs {
+        release {
+            if (releaseStoreFile && releaseStorePassword && releaseKeyAlias && releaseKeyPassword) {
+                storeFile file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -33,6 +48,9 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            if (releaseStoreFile && releaseStorePassword && releaseKeyAlias && releaseKeyPassword) {
+                signingConfig signingConfigs.release
+            }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
