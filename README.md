@@ -311,4 +311,6 @@ closed.
 
 </details>
 
-<p align="center">Built with ❤️ during Hacktoberfest.</p>
+<div align="center" style="border-top: 4px solid #0f766e; margin-top: 32px; padding-top: 18px;">
+  <strong>Built with ❤️ during Hacktoberfest.</strong>
+</div>
