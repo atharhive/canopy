@@ -146,14 +146,13 @@ approximately 529 MB. Canopy remains usable without it.
 
 ### Build from source
 
-#### Requirements
+<details>
+<summary><strong>Requirements and project setup</strong></summary>
 
 - Android Studio with Android SDK API 35.
 - JDK 17.
 - Android device or emulator running Android 8.0/API 26 or newer.
 - Approximately 2 GB of free space for optional Gemma model testing.
-
-#### Clone and open the project
 
 ```bash
 git clone https://github.com/atharhive/canopy.git
@@ -164,7 +163,10 @@ Open the cloned folder in Android Studio, allow the Gradle sync to finish, and
 select the `app` run configuration. Android Studio will use the Gradle wrapper
 included in the repository.
 
-#### Build the debug APK
+</details>
+
+<details>
+<summary><strong>Build and install</strong></summary>
 
 ```bash
 ./gradlew assembleDebug
@@ -182,7 +184,10 @@ Install it on a connected device with:
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-#### Run and test locally
+</details>
+
+<details>
+<summary><strong>Run, test, and release</strong></summary>
 
 1. Grant microphone and location permissions when Canopy requests them.
 2. Use **Try a demo** to preview the interface without downloading BirdNET.
@@ -202,6 +207,8 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 The release build requires a signing keystore. Never commit the keystore,
 passwords, or signing properties to the repository. For ordinary development,
 the debug build is the recommended option.
+
+</details>
 
 ## Release verification
 
@@ -241,30 +248,23 @@ required before downloading or redistributing it.
 Contributions are welcome. Please use the following workflow so changes are
 easy to review, test, and merge.
 
-### 1. Set up your fork
+<details>
+<summary><strong>1. Set up your fork</strong></summary>
 
 1. Fork [Canopy on GitHub](https://github.com/atharhive/canopy).
-2. Clone your fork and enter the repository:
+2. Clone it and add the upstream repository:
 
    ```bash
    git clone https://github.com/YOUR_USERNAME/canopy.git
    cd canopy
-   ```
-
-3. Add the upstream repository:
-
-   ```bash
    git remote add upstream https://github.com/atharhive/canopy.git
    git fetch upstream
-   ```
-
-4. Create a focused branch from the latest `main`:
-
-   ```bash
    git checkout main
    git pull upstream main
    git checkout -b fix/short-description
    ```
+
+</details>
 
 ### 2. Make and test your change
 
@@ -285,7 +285,8 @@ easy to review, test, and merge.
   narration, downloads, or challenges.
 - Include screenshots or a short screen recording for UI changes.
 
-### 3. Open a pull request
+<details>
+<summary><strong>3. Open a pull request</strong></summary>
 
 Before opening the pull request:
 
@@ -308,4 +309,6 @@ testing, accessibility, UI, and carefully scoped bug-fix contributions are
 especially welcome; duplicate or drive-by formatting pull requests may be
 closed.
 
-Built with ❤️ during Hacktoberfest.
+</details>
+
+<p align="center">Built with ❤️ during Hacktoberfest.</p>
