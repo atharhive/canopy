@@ -6,6 +6,36 @@
         android:layout="@layout/reset_button"/>
 
     <SwitchPreferenceCompat
+        android:title="@string/detection_enabled"
+        android:summary="@string/detection_enabled_summary"
+        android:key="detection_enabled"
+        android:defaultValue="true" />
+
+    <SwitchPreferenceCompat
+        android:title="@string/spoken_summaries"
+        android:summary="@string/spoken_summaries_summary"
+        android:key="spoken_summaries"
+        android:defaultValue="true" />
+
+    <SwitchPreferenceCompat
+        android:title="@string/text_to_speech"
+        android:summary="@string/text_to_speech_summary"
+        android:key="text_to_speech"
+        android:defaultValue="true" />
+
+    <SwitchPreferenceCompat
+        android:title="@string/gemma_enabled"
+        android:summary="@string/gemma_enabled_summary"
+        android:key="gemma_enabled"
+        android:defaultValue="false"
+        />
+
+    <Preference
+        android:key="gemma_download"
+        android:title="@string/gemma_download"
+        android:summary="@string/gemma_download_summary" />
+
+    <SwitchPreferenceCompat
         android:title="@string/high_contrast_theme"
         android:key="theme"
         android:defaultValue="false"

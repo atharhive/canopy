@@ -669,6 +669,9 @@ class SoundClassifier(
         database?.addEntry(label, currentLocation.latitude.toFloat(), currentLocation.longitude.toFloat(), element.index, element.value, timeInMillis)
         if (sharedPref.getBoolean("write_wav",false)) WavUtils.createWaveFile(timeInMillis, recognizerWorkingBuffer.duplicate(), options.sampleRate,1,2)
         if (sharedPref.getBoolean("play_sound",false)) PlayNotification.playSound(mContext);
+        if (sharedPref.getBoolean("spoken_summaries", true) && sharedPref.getBoolean("text_to_speech", true)) {
+          NarrationManager.speak(mContext, label, element.value)
+        }
       }
     } else {
       Handler(Looper.getMainLooper()).post {
@@ -707,5 +710,4 @@ class SoundClassifier(
     private const val NANOS_IN_MILLIS = 1_000_000.toDouble()
   }
 }
-
 

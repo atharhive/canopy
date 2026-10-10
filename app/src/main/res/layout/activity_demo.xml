@@ -31,6 +31,30 @@
         android:textColor="@color/surface_light"
         android:textSize="16sp" />
 
+    <Switch
+        android:id="@+id/demo_detection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/detection_enabled"
+        android:textColor="@color/surface_light" />
+
+    <Switch
+        android:id="@+id/demo_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/spoken_summaries"
+        android:textColor="@color/surface_light" />
+
+    <Switch
+        android:id="@+id/demo_tts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/text_to_speech"
+        android:textColor="@color/surface_light" />
+
     <Button
         android:id="@+id/play_demo"
         android:layout_width="wrap_content"

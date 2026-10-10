@@ -11,6 +11,7 @@ using the BirdNET machine-learning model.
 - Optional spectrogram and WAV recording support
 - Manual location, Bluetooth audio, language, and accessibility settings
 - Guided demo mode with a simulated bird call and sample detection
+- Optional spoken detection summaries using the device's built-in text-to-speech
 
 ## Requirements
 
@@ -33,6 +34,14 @@ The generated APK is written to `app/build/outputs/apk/debug/`.
 
 The demo is available from the model download screen. It does not require a
 model download and clearly labels its simulated result.
+
+Spoken summaries use Android's local text-to-speech engine. Optional Gemma 3
+1B instruction-tuned int4 inference runs on-device through MediaPipe when its
+separate model download is complete. The model is approximately 529 MB and is
+not bundled in the APK. If it is unavailable, Canopy uses a deterministic
+local summary instead. Gemma receives only the BirdNET species and confidence
+and is instructed not to change the detected species. ElevenLabs is not part
+of the local-first build.
 
 ## Model and licensing
 

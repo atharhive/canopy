@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.app.AlertDialog;
 
 import androidx.annotation.NonNull;
 import androidx.preference.Preference;
@@ -75,6 +76,42 @@ Context mContext;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) preferenceScreen.removePreference(writeWav);
 
             Preference reset = getPreferenceManager().findPreference("reset");
+            Preference gemmaDownload = getPreferenceManager().findPreference("gemma_download");
+            if (gemmaDownload != null) gemmaDownload.setOnPreferenceClickListener(preference -> {
+                if (GemmaManager.INSTANCE.isDownloaded(requireContext())) {
+                    Toast.makeText(requireContext(), "Gemma is already downloaded.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Download Gemma 3 1B")
+                        .setMessage("This offline model is approximately 529 MB. Continue?")
+                        .setNegativeButton("Cancel", null)
+                        .setPositiveButton("Download", (dialog, which) -> {
+                            gemmaDownload.setEnabled(false);
+                            GemmaManager.INSTANCE.download(requireContext(), new GemmaDownloadProgress() {
+                                @Override
+                                public void onProgress(int progress) {
+                                    requireActivity().runOnUiThread(() ->
+                                            gemmaDownload.setSummary("Downloading Gemma: " + progress + "%"));
+                                }
+                            }, new GemmaDownloadComplete() {
+                                @Override
+                                public void onComplete(boolean success) {
+                                    requireActivity().runOnUiThread(() -> {
+                                        gemmaDownload.setEnabled(true);
+                                        if (success) {
+                                            gemmaDownload.setSummary("Gemma downloaded. Enable Gemma summaries above.");
+                                            Toast.makeText(requireContext(), "Gemma download complete.", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            gemmaDownload.setSummary("Download failed. Check your connection and try again.");
+                                            Toast.makeText(requireContext(), "Gemma download failed.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
+                        }).show();
+                return true;
+            });
 
             if (reset != null) reset.setOnPreferenceClickListener(preference -> {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());

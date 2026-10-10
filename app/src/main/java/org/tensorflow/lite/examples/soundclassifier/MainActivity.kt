@@ -80,6 +80,7 @@ class MainActivity : BaseActivity() {
     binding.rangeSlider.labelBehavior = LABEL_GONE
 
     soundClassifier = SoundClassifier(this, binding, SoundClassifier.Options())
+    NarrationManager.initialize(this)
     binding.gps.setText(getString(R.string.latitude)+": --.-- / " + getString(R.string.longitude) + ": --.--" )
     binding.webview.setWebViewClient(object : MlWebViewClient(this) {})
     binding.webview.settings.setDomStorageEnabled(true)
@@ -107,7 +108,7 @@ class MainActivity : BaseActivity() {
     binding.bottomNavigationView.setOnItemSelectedListener { item ->
       when (item.itemId) {
         R.id.action_view -> {
-          intent = Intent(this, ViewActivity::class.java)
+          intent = Intent(this, GalleryActivity::class.java)
           startActivity(intent)
         }
         R.id.action_bird_info -> {
@@ -155,7 +156,7 @@ class MainActivity : BaseActivity() {
     if (!checkLocationPermission()){
       Toast.makeText(this, this.resources.getString(R.string.error_location_permission), Toast.LENGTH_SHORT).show()
     }
-    if (checkMicrophonePermission()){
+    if (sharedPref.getBoolean("detection_enabled", true) && checkMicrophonePermission()){
       soundClassifier.start()
     } else {
       Toast.makeText(this, this.resources.getString(R.string.error_audio_permission), Toast.LENGTH_SHORT).show()
@@ -170,6 +171,11 @@ class MainActivity : BaseActivity() {
     val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
     audioManager.stopBluetoothSco()
     audioManager.isBluetoothScoOn = false
+  }
+
+  override fun onDestroy() {
+    NarrationManager.shutdown()
+    super.onDestroy()
   }
 
   private fun checkMicrophonePermission(): Boolean {

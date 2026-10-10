@@ -5,6 +5,7 @@ import android.media.AudioManager
 import android.media.AudioTrack
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Switch
 import android.widget.TextView
 import kotlin.math.PI
 import kotlin.math.sin
@@ -15,14 +16,28 @@ class DemoActivity : BaseActivity() {
     setContentView(R.layout.activity_demo)
     val status = findViewById<TextView>(R.id.demo_status)
     val result = findViewById<TextView>(R.id.demo_result)
+    val detection = findViewById<Switch>(R.id.demo_detection)
+    val summary = findViewById<Switch>(R.id.demo_summary)
+    val tts = findViewById<Switch>(R.id.demo_tts)
+    NarrationManager.initialize(this)
     findViewById<Button>(R.id.play_demo).setOnClickListener {
       status.setText(R.string.demo_description)
-      result.visibility = TextView.VISIBLE
-      result.setText(R.string.demo_result_text)
+      result.visibility = if (detection.isChecked) TextView.VISIBLE else TextView.GONE
+      if (detection.isChecked && summary.isChecked) {
+        result.setText(R.string.demo_result_text)
+        if (tts.isChecked) NarrationManager.speak(this, "European Robin", 0.91f)
+      } else if (detection.isChecked) {
+        result.text = getString(R.string.demo_result)
+      }
       Thread {
         playSimulatedCall()
       }.start()
     }
+  }
+
+  override fun onDestroy() {
+    NarrationManager.shutdown()
+    super.onDestroy()
   }
 
   private fun playSimulatedCall() {

@@ -127,6 +127,7 @@ public class BirdDBHelper extends SQLiteOpenHelper {
                         birdObservations.add(birdObservation);
                         previousEntry = birdObservation;
                     }
+
                 } else {
                     // If condensed is false, simply add all entries to the list without any modifications
                     birdObservations.add(birdObservation);
@@ -135,6 +136,40 @@ public class BirdDBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return birdObservations;
+    }
+
+    public synchronized List<BirdObservation> getCollectedSpecies() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT b.* FROM " + TABLE_NAME + " b " +
+                "INNER JOIN (SELECT BirdNET_ID, MAX(Probability) AS BestProbability " +
+                "FROM " + TABLE_NAME + " GROUP BY BirdNET_ID) best " +
+                "ON b.BirdNET_ID = best.BirdNET_ID AND b.Probability = best.BestProbability " +
+                "ORDER BY b.Probability DESC", null);
+        List<BirdObservation> result = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                BirdObservation observation = new BirdObservation();
+                observation.setId(cursor.getInt(0));
+                observation.setMillis(cursor.getLong(1));
+                observation.setLatitude(cursor.getFloat(2));
+                observation.setLongitude(cursor.getFloat(3));
+                observation.setName(cursor.getString(4));
+                observation.setSpeciesId(cursor.getInt(5));
+                observation.setProbability(cursor.getFloat(6));
+                result.add(observation);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return result;
+    }
+
+    public synchronized int getObservationCountForSpecies(int speciesId) {
+        Cursor cursor = getReadableDatabase().rawQuery(
+                "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE BirdNET_ID = ?",
+                new String[]{String.valueOf(speciesId)});
+        int count = cursor.moveToFirst() ? cursor.getInt(0) : 0;
+        cursor.close();
+        return count;
     }
 
     public static BirdDBHelper getInstance(Context context) {

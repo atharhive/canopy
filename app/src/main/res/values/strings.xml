@@ -48,4 +48,14 @@
     <string name="play_demo">Play demo</string>
     <string name="demo_result">Demo result</string>
     <string name="demo_result_text">European Robin\n91% confidence\nThis is a simulated result for the guided demo.</string>
+    <string name="detection_enabled">Detection</string>
+    <string name="detection_enabled_summary">Listen for bird sounds and analyze them with BirdNET</string>
+    <string name="spoken_summaries">Spoken summaries</string>
+    <string name="spoken_summaries_summary">Create a short description for detected birds</string>
+    <string name="text_to_speech">Text-to-speech</string>
+    <string name="text_to_speech_summary">Read detection summaries aloud using the device voice</string>
+    <string name="gemma_enabled">Gemma summaries</string>
+    <string name="gemma_enabled_summary">Available after a compatible local Gemma model is downloaded</string>
+    <string name="gemma_download">Download lightweight Gemma model</string>
+    <string name="gemma_download_summary">Gemma 3 1B int4, approximately 529 MB. Download once for offline summaries and challenges.</string>
 </resources>
