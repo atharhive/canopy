@@ -146,49 +146,71 @@ approximately 529 MB. Canopy remains usable without it.
 
 ### Build from source
 
-<details>
-<summary><strong>Requirements</strong></summary>
+#### Requirements
 
 - Android Studio with Android SDK API 35.
 - JDK 17.
 - Android device or emulator running Android 8.0/API 26 or newer.
 - Approximately 2 GB of free space for optional Gemma model testing.
 
-</details>
+#### Clone and open the project
 
 ```bash
 git clone https://github.com/atharhive/canopy.git
 cd canopy
+```
+
+Open the cloned folder in Android Studio, allow the Gradle sync to finish, and
+select the `app` run configuration. Android Studio will use the Gradle wrapper
+included in the repository.
+
+#### Build the debug APK
+
+```bash
 ./gradlew assembleDebug
 ```
 
-The debug APK is generated at `app/build/outputs/apk/debug/app-debug.apk`.
+The debug APK is generated at:
 
-<details>
-<summary><strong>Run and test locally</strong></summary>
+```text
+app/build/outputs/apk/debug/app-debug.apk
+```
 
-1. Open the project in Android Studio.
-2. Let Gradle sync and select an Android device or emulator.
-3. Run the `app` configuration.
-4. Grant microphone and location permissions.
-5. Use **Try a demo** to preview the flow without a real model.
-6. Download the BirdNET model and test real detections outdoors.
-7. Open the collection icon to review cards and challenges.
-8. Download Gemma only if the device has enough storage and memory.
+Install it on a connected device with:
 
-</details>
+```bash
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+#### Run and test locally
+
+1. Grant microphone and location permissions when Canopy requests them.
+2. Use **Try a demo** to preview the interface without downloading BirdNET.
+3. Download the BirdNET model from the model screen.
+4. Start detection and test with real outdoor bird sounds.
+5. Open the collection icon to review cards and challenges.
+6. Download Gemma only if the device has enough storage and memory.
+7. Enable Gemma summaries to try local explanations and custom challenges.
+8. Disable Gemma to verify that the offline fallback summaries still work.
+
+#### Build the optimized release
+
+```bash
+./gradlew assembleRelease
+```
+
+The release build requires a signing keystore. Never commit the keystore,
+passwords, or signing properties to the repository. For ordinary development,
+the debug build is the recommended option.
 
 ## Release verification
 
-<details>
-<summary><strong>5.4.0 Local Gemma Beta</strong></summary>
+### 5.4.0 Local Gemma Beta
 
 - Tag: [`v5.4.0-gemma-beta`](https://github.com/atharhive/canopy/releases/tag/v5.4.0-gemma-beta)
 - APK: `Canopy-5.4.0-gemma-beta.apk`
 - SHA-256: `edb7e6eb1d0f328030c9c092c0171c9db1b6b539c910a322a5b66c92f464f337`
 - Gemma: Gemma 3 1B instruction-tuned int4, downloaded separately.
-
-</details>
 
 ## Model and licensing
 
@@ -216,35 +238,74 @@ required before downloading or redistributing it.
 
 ## Contributing
 
-Contributions are welcome and appreciated. Before opening an issue or pull
-request, please search existing discussions and keep changes focused on one
-problem or improvement.
+Contributions are welcome. Please use the following workflow so changes are
+easy to review, test, and merge.
 
-<details>
-<summary><strong>Contribution checklist</strong></summary>
+### 1. Set up your fork
 
-- Fork the repository and create a focused feature branch.
-- Use the existing Kotlin, Java, Android, and Gradle conventions.
-- Keep user data local and never commit credentials, signing keys, or model secrets.
-- Build and test with `./gradlew assembleDebug` before opening a pull request.
-- Include a clear summary, testing details, screenshots for UI changes, and any
-  device/API-level limitations.
-- Update documentation when behavior, setup, or user-facing features change.
-- Be respectful, constructive, and welcoming in issues and reviews.
+1. Fork [Canopy on GitHub](https://github.com/atharhive/canopy).
+2. Clone your fork and enter the repository:
 
-</details>
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/canopy.git
+   cd canopy
+   ```
 
-<details>
-<summary><strong>Hacktoberfest contributions</strong></summary>
+3. Add the upstream repository:
 
-Small, meaningful improvements are welcome during Hacktoberfest. Good first
-contributions include documentation fixes, accessibility improvements, testing
-coverage, UI polish, and carefully scoped bug fixes. Please avoid drive-by
-formatting changes or duplicate submissions; maintainers review every
-contribution for quality and relevance.
+   ```bash
+   git remote add upstream https://github.com/atharhive/canopy.git
+   git fetch upstream
+   ```
 
-</details>
+4. Create a focused branch from the latest `main`:
 
-<p align="center">
-  Built with love for curious listeners during Hacktoberfest ❤️ 🐦 ❤️
-</p>
+   ```bash
+   git checkout main
+   git pull upstream main
+   git checkout -b fix/short-description
+   ```
+
+### 2. Make and test your change
+
+- Keep each pull request focused on one feature, fix, documentation update, or
+  accessibility improvement.
+- Follow the existing Kotlin, Java, Android XML, and Gradle conventions.
+- Keep recordings, observations, locations, credentials, signing keys, and
+  model secrets out of commits.
+- Build the project before submitting:
+
+  ```bash
+  ./gradlew assembleDebug
+  ```
+
+- Test on an Android device or emulator when the change affects runtime
+  behavior.
+- Test both the normal path and offline fallback when changing Gemma,
+  narration, downloads, or challenges.
+- Include screenshots or a short screen recording for UI changes.
+
+### 3. Open a pull request
+
+Before opening the pull request:
+
+```bash
+git diff upstream/main...HEAD
+git status
+git push origin fix/short-description
+```
+
+The pull request description should explain:
+
+- What changed and why.
+- How the change was tested.
+- Device model and Android API level, if relevant.
+- Any known limitations, migration steps, or follow-up work.
+
+Please search existing issues before creating a duplicate. Be respectful and
+constructive in reviews. During Hacktoberfest, meaningful documentation,
+testing, accessibility, UI, and carefully scoped bug-fix contributions are
+especially welcome; duplicate or drive-by formatting pull requests may be
+closed.
+
+Built with ❤️ during Hacktoberfest.
