@@ -148,6 +148,10 @@ class GalleryActivity : BaseActivity() {
         val count = database.getObservationCountForSpecies(observation.speciesId)
         return TextView(this).apply {
             val confidence = (observation.probability * 100).toInt()
+            val names = observation.name.split("_", limit = 2)
+            val scientificName = names.first()
+            val commonName = names.getOrNull(1) ?: observation.name
+            contentDescription = "$commonName, scientific name $scientificName. Confidence $confidence percent."
             text = "🐦  ${observation.name}\n" +
                     "Best match: $confidence%  •  Heard $count time${if (count == 1) "" else "s"}\n" +
                     "Collected ${DateFormat.getDateInstance().format(Date(observation.millis))}"
