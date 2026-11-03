@@ -1,0 +1,26 @@
+name: Bug Report
+description: File a bug report for Canopy
+labels: ["bug"]
+body:
+  - type: input
+    id: device_info
+    attributes:
+      label: Device Model & Android Version
+      placeholder: Pixel 7, Android 14 (API 34)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What unexpected behavior did you experience?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Open Canopy
+        2. Tap 'Start Detection'
+        3. Switch to background

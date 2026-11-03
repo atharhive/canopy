@@ -1,0 +1,16 @@
+name: Feature Request
+description: Suggest an enhancement or new feature for Canopy
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: feature
+    attributes:
+      label: Feature Description
+      description: Describe the feature, model optimization, or accessibility enhancement.
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Use Case / Motivation
+      description: How will this improve the field listening experience?
